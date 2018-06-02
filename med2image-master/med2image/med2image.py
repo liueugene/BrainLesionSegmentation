@@ -21,7 +21,7 @@ import re
 
 # System dependency imports
 import nibabel as nib
-import dicom
+import pydicom as dicom
 import pylab
 import matplotlib.cm as cm
 
@@ -418,36 +418,12 @@ class med2image_dcm(med2image):
         Runs the DICOM conversion based on internal state.
         '''
         self._log('Converting DICOM image.\n')
-        try:
-            self._log('PatientName:                                %s\n' % self._dcm.PatientName)
-        except AttributeError:
-            self._log('PatientName:                                %s\n' % 'PatientName not found in DCM header.')
-            error.warn(self, 'PatientNameTag')
-        try:
-            self._log('PatientAge:                                 %s\n' % self._dcm.PatientAge)
-        except AttributeError:
-            self._log('PatientAge:                                 %s\n' % 'PatientAge not found in DCM header.')
-            error.warn(self, 'PatientAgeTag')
-        try:
-            self._log('PatientSex:                                 %s\n' % self._dcm.PatientSex)
-        except AttributeError:
-            self._log('PatientSex:                                 %s\n' % 'PatientSex not found in DCM header.')
-            error.warn(self, 'PatientSexTag')
-        try:
-            self._log('PatientID:                                  %s\n' % self._dcm.PatientID)
-        except AttributeError:
-            self._log('PatientID:                                  %s\n' % 'PatientID not found in DCM header.')
-            error.warn(self, 'PatientIDTag')
-        try:
-            self._log('SeriesDescription:                          %s\n' % self._dcm.SeriesDescription)
-        except AttributeError:
-            self._log('SeriesDescription:                          %s\n' % 'SeriesDescription not found in DCM header.')
-            error.warn(self, 'SeriesDescriptionTag')
-        try:
-            self._log('ProtocolName:                               %s\n' % self._dcm.ProtocolName)
-        except AttributeError:
-            self._log('ProtocolName:                               %s\n' % 'ProtocolName not found in DCM header.')
-            error.warn(self, 'ProtocolNameTag')
+        self._log('PatientName:                                %s\n' % self._dcm.PatientName if hasattr(self._dcm, 'PatientName') else "--")
+        self._log('PatientAge:                                 %s\n' % self._dcm.PatientAge if hasattr(self._dcm, 'PatientAge') else "--")
+        self._log('PatientSex:                                 %s\n' % self._dcm.PatientSex if hasattr(self._dcm, 'PatientSex') else "--")
+        self._log('PatientID:                                  %s\n' % self._dcm.PatientID if hasattr(self._dcm, 'PatientID') else "--")
+        self._log('SeriesDescription:                          %s\n' % self._dcm.SeriesDescription if hasattr(self._dcm, 'SeriesDescription') else "--")
+        self._log('ProtocolName:                               %s\n' % self._dcm.ProtocolName if hasattr(self._dcm, 'ProtocolName') else "--")
 
         if self._b_convertMiddleSlice:
             self._log('Converting middle slice in DICOM series:    %d\n' % self._sliceToConvert)
