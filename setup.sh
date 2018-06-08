@@ -1,4 +1,4 @@
 #!/bin/bash
-
-pip3 install -r mritopng-master/requirements.txt
-python3 mritopng-master/setup.py install
+cd mritopng-master
+pip3 install -r requirements.txt
+python3 setup.py install
